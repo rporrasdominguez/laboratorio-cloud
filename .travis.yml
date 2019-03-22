@@ -4,6 +4,6 @@ services:
 script:
   - docker build -t cloud .
 after_success:
-  -docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-  -docker tag laboratorio $DOCKER_USER/laboratorioTravis
-  -docker push $DOCKER_USER/laboratorioTravis
+  - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+  - docker tag laboratorio $DOCKER_USER/laboratorioTravis
+  - docker push $DOCKER_USER/laboratorioTravis
