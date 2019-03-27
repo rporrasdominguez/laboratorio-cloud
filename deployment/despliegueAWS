@@ -1,0 +1,55 @@
+Instrucciones para el despliegue en AWS
+A) Instalacion de Terraform
+    1.  Instalamos terraform
+
+    2.  Añadimos el binario descargado en las varibles de entorno del sistema y creamos un enlace para su ejecucion
+        export PATH = "$PATH:/home/Programas/terraform
+        sudo ls -s /home/Programas/terraform terraform
+
+B) Creacion de una cuenta en AWS 
+    1. Accedemos al sitio web de AWS y creamos nuestra cuenta.
+
+C) Creacion de un usuario para AWS
+    1. Una vez creada la cuenta accedemos a la consola de administracion de AWS, dentro de Servicios AWS hacemos click en IAM.
+    
+    2. Añadimos el usuario dandole un nombre y marcamos su acceso mediante programacion
+    
+    3.Pulsamos siguiente permisos.
+    
+    4. A continuacion elegimos la pestaña "Asociar directamente las politicas existentes" y buscamos la politica EC2FullAccess en el buscador.
+    
+    5.Pulsamos siguiente y por ultimo Crear usuario.
+    
+    6. Al crear el usuario nos daran el ID y el Password de acceso remoto que necesitaremos para acceder a AWS y desplegar, por lo que procederemos a copiarlos y guardarlos en un lugar seguro en nuestro ordenador.
+
+D) Configuracion de nuestro servicio EC2.
+    1.Vamos a servicios y elegimos EC2, donde se nos muestran todos los recursos asociados a nuestra cuenta.De momento ninguno.
+    
+    2.Lo que si tenemos es pares de claves "KEY Pairs". Accedemos dentro de ellas y creamos una.
+    
+    3.Para ello pulsamos Create Key Par que nos abrira una ventana que nos posibilitara la descarga de la clave ssh.
+    
+    4.La guardamos en el proyecto, pero asegurandonos de no subirla al github, incluyendo este archivo dentro del .gitignore.
+
+E) Despliegue con terraform.
+    1.Creamos una carpeta deployment y en su interion un archivo main.tf, donde definiremos en codigo nuestra infraestructura.
+    
+    2.Para crear este fichero nos hara falta la ami o identificador de maquina virtual, por lo que debemos ir de nuevo a AWS/Servicios/GruposRecursos/CreateInstance/LaunchInstance. Aqui nos saldran los identificadores de la aim. Lo copiamos y lo pegamos en nuestro main.tf
+    
+    3.Una vez terminado este archivo nos vamos desde la consola a la carpeta donde este nuestro main.tf e iniciamos terraform con "terraform init", descargando todo lo necesario para nuestro proyecto.
+    
+    4.Un vez que se ha terminado de ejecutar podemos hacer un plan de despliegue, que hara un estudio de nuestra infraestructura, que dependencias tiene y si esta correcto o no. Para ello ejecutaremos "terraform plan".
+    
+    5. Es hora de usar la ID y Password que copiamos cuando creamos el usuario. Y para ello vamos a guardarlas como variables de entorno de nuestro sistema operativo para poder usarlas posteriormente con seguridad. Para ello en nuestra consola ejecutamos "export AWS_ACCESS_KEY_ID = id_copiado, y "export AWS_SECRET_ACCESS_KEY = password_copiado.
+    
+    6.Una vez guardados nuestros datos en las variables de entorno ejecutamos "terraform appy", y seleccionamos si, comenzando asi el despliegue.
+    
+    7.Si nos vamos a AWS dentro de EC2 podremos ver que nuestra estancia esta desplegada y corriendo. 
+
+
+
+
+
+
+
+    
